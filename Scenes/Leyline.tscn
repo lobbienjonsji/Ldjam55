@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxf8ua8lcu0qu"]
+
+[ext_resource type="Script" path="res://Scenes/Leyline.gd" id="1_xlu4d"]
+[ext_resource type="Texture2D" uid="uid://bw5nm3qjbq3m0" path="res://Textures/Warning.png" id="2_4qrol"]
+[ext_resource type="Texture2D" uid="uid://dh1477dio3fc" path="res://Textures/Leyline.png" id="3_nao62"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6uuu"]
+size = Vector2(100, 100)
+
+[node name="Leyline" type="Node2D"]
+z_index = 3
+script = ExtResource("1_xlu4d")
+
+[node name="Area2D" type="Area2D" parent="."]
+metadata/is_enemy = true
+metadata/dmg = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_i6uuu")
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 1.2
+autostart = true
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Warning" type="Sprite2D" parent="."]
+texture = ExtResource("2_4qrol")
+
+[node name="Eruption" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("3_nao62")
+
+[connection signal="timeout" from="Timer2" to="." method="_destroy"]
+[connection signal="timeout" from="Timer" to="." method="_erupt"]

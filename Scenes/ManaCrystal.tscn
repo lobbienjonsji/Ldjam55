@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1wr5lcm6u2h4"]
+
+[ext_resource type="Script" path="res://Scenes/ManaCrystal.gd" id="1_q0c54"]
+[ext_resource type="Texture2D" uid="uid://bepksco1crfsn" path="res://Textures/ManaCrystal.png" id="2_cu0d1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kvisv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cu0d1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmunp"]
+size = Vector2(100, 100)
+
+[node name="ManaCrystal" type="Area2D"]
+script = ExtResource("1_q0c54")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kvisv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nmunp")
+
+[node name="ShotEmitterRight" type="Node2D" parent="."]
+position = Vector2(50, 0)
+
+[node name="ShotEmitterTop" type="Node2D" parent="."]
+position = Vector2(0, -50)
+
+[node name="ShotEmitterLeft" type="Node2D" parent="."]
+position = Vector2(-50, 0)
+
+[node name="ShotEmitterBottom" type="Node2D" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[node name="ShotTimer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

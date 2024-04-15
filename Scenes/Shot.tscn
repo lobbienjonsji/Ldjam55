@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd7w38b7ji7j1"]
+
+[ext_resource type="Script" path="res://Scenes/Shot.gd" id="1_r45rf"]
+[ext_resource type="Texture2D" uid="uid://g6otsj2pcbks" path="res://Textures/Projectile.png" id="2_6twam"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ft1rf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6twam")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vagut"]
+size = Vector2(60, 40)
+
+[node name="Shot" type="Area2D"]
+z_index = 8
+script = ExtResource("1_r45rf")
+metadata/dmg = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 2
+position = Vector2(-40, 0)
+sprite_frames = SubResource("SpriteFrames_ft1rf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-30, 0)
+shape = SubResource("RectangleShape2D_vagut")

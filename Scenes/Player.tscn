@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://i7vl8qit28db"]
+
+[ext_resource type="Script" path="res://Scenes/Player.gd" id="1_tstve"]
+[ext_resource type="Texture2D" uid="uid://ceh8s62csvs5s" path="res://Textures/Player.png" id="2_mxc7j"]
+[ext_resource type="PackedScene" uid="uid://cmdiypvunxh7t" path="res://Scenes/MovementHandler.tscn" id="3_27pnn"]
+[ext_resource type="PackedScene" uid="uid://doayacibtlaj" path="res://Scenes/HealthBar.tscn" id="3_hyfpy"]
+[ext_resource type="PackedScene" uid="uid://c7r6l1glxepwy" path="res://Scenes/ManaBar.tscn" id="4_xcebu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4tdj"]
+size = Vector2(100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_30ya5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mxc7j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="Area2D"]
+z_index = 3
+position = Vector2(50, 50)
+script = ExtResource("1_tstve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_b4tdj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_30ya5")
+
+[node name="MovementHandler" parent="." instance=ExtResource("3_27pnn")]
+velocity = 25.0
+
+[node name="ManaBar" parent="." instance=ExtResource("4_xcebu")]
+max_mana = 16.0
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("3_hyfpy")]
+max_hp = 100
+hitbox = NodePath("..")
+
+[connection signal="area_shape_entered" from="." to="." method="_on_collision"]
+[connection signal="update_global_position" from="MovementHandler" to="." method="_update_position"]
+[connection signal="on_death" from="HealthBar" to="." method="_on_death"]

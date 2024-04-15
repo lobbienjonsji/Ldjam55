@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://pxisv0bbvpdn"]
+
+[ext_resource type="Script" path="res://Scenes/ManaWell.gd" id="1_47mbl"]
+[ext_resource type="Texture2D" uid="uid://c278kd1x8a6m0" path="res://Textures/ManaBloom.png" id="2_bwcyt"]
+[ext_resource type="PackedScene" uid="uid://c7r6l1glxepwy" path="res://Scenes/ManaBar.tscn" id="3_t5m4t"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k6y8t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bwcyt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ut1pe"]
+size = Vector2(100, 100)
+
+[node name="ManaWell" type="Area2D"]
+z_index = 2
+script = ExtResource("1_47mbl")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k6y8t")
+
+[node name="ManaBar" parent="." instance=ExtResource("3_t5m4t")]
+max_mana = 4.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ut1pe")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

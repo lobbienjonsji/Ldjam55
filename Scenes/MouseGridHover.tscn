@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://drcw45moi33dn"]
+
+[ext_resource type="Script" path="res://Scenes/MouseGridHover.gd" id="1_nsbvn"]
+
+[node name="MouseGridHover" type="ColorRect"]
+z_index = 5
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -1200.0
+offset_right = 100.0
+offset_bottom = -1100.0
+grow_vertical = 0
+pivot_offset = Vector2(-150, -150)
+script = ExtResource("1_nsbvn")

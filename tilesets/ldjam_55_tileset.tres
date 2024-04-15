@@ -1,0 +1,43 @@
+[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://2rr54oppv6m3"]
+
+[ext_resource type="Texture2D" uid="uid://c8jhavxxde03m" path="res://Textures/BaseTile.png" id="1_lqrj5"]
+[ext_resource type="PackedScene" uid="uid://dfxariuyjlre7" path="res://Scenes/OccupiedArea.tscn" id="2_otigf"]
+[ext_resource type="Texture2D" uid="uid://dw4f4677878ni" path="res://Textures/Wall1.png" id="3_27q6t"]
+[ext_resource type="Texture2D" uid="uid://c4mf4r8askf0c" path="res://Textures/Wall2.png" id="4_o05fb"]
+[ext_resource type="PackedScene" uid="uid://du8xdcrtwcbns" path="res://Scenes/Coin.tscn" id="5_7h46o"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w25sa"]
+texture = ExtResource("1_lqrj5")
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_qmdn5"]
+scenes/4/scene = ExtResource("2_otigf")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_28wnl"]
+texture = ExtResource("3_27q6t")
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bpjd"]
+texture = ExtResource("4_o05fb")
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_n0muu"]
+scenes/1/scene = ExtResource("5_7h46o")
+
+[resource]
+tile_size = Vector2i(100, 100)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_w25sa")
+sources/1 = SubResource("TileSetScenesCollectionSource_qmdn5")
+sources/2 = SubResource("TileSetAtlasSource_28wnl")
+sources/3 = SubResource("TileSetAtlasSource_4bpjd")
+sources/4 = SubResource("TileSetScenesCollectionSource_n0muu")

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://y2xk75wspvcd"]
+
+[ext_resource type="Script" path="res://Scenes/LargeRock.gd" id="1_iq4bn"]
+[ext_resource type="Texture2D" uid="uid://c00v6jfccki6l" path="res://Textures/LargeRock.png" id="2_bi3au"]
+[ext_resource type="PackedScene" uid="uid://doayacibtlaj" path="res://Scenes/HealthBar.tscn" id="3_awawp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai7ef"]
+size = Vector2(100, 100)
+
+[node name="LargeRock" type="Area2D"]
+z_index = 2
+script = ExtResource("1_iq4bn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_bi3au")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ai7ef")
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("3_awawp")]
+max_hp = 45
+hitbox = NodePath("..")
+is_enemy = true
+
+[node name="ShotEmitter" type="Node2D" parent="."]
+position = Vector2(-50, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.75
+autostart = true
+
+[connection signal="on_death" from="HealthBar" to="." method="_on_health_bar_on_death"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://btjffplj1x5br"]
+
+[ext_resource type="Script" path="res://Scenes/StateMachine.gd" id="1_8bd22"]
+[ext_resource type="Script" path="res://Scenes/Spirit.gd" id="1_crsmx"]
+[ext_resource type="Texture2D" uid="uid://befen6a8hyydn" path="res://Textures/Enemy1.png" id="1_q7wvk"]
+[ext_resource type="Script" path="res://Scenes/States/MoveToPlayerState.gd" id="2_adjfo"]
+[ext_resource type="PackedScene" uid="uid://doayacibtlaj" path="res://Scenes/HealthBar.tscn" id="2_dqkyr"]
+[ext_resource type="Script" path="res://Scenes/States/ShootState.gd" id="4_dl72o"]
+[ext_resource type="PackedScene" uid="uid://cmdiypvunxh7t" path="res://Scenes/MovementHandler.tscn" id="5_5dt8b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h3l7i"]
+size = Vector2(100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f81wi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_q7wvk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Spirit" type="Area2D"]
+position = Vector2(50, 50)
+script = ExtResource("1_crsmx")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("1_8bd22")
+init_state = NodePath("MoveToPlayerState")
+
+[node name="MoveToPlayerState" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_handler")]
+script = ExtResource("2_adjfo")
+movement_handler = NodePath("../../MovementHandler")
+
+[node name="ShootState" type="Node" parent="StateMachine" node_paths=PackedStringArray("shot_spawner")]
+script = ExtResource("4_dl72o")
+shot_spawner = NodePath("../../ShotSpawner")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_h3l7i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f81wi")
+flip_h = true
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("2_dqkyr")]
+max_hp = 20
+hitbox = NodePath("..")
+is_enemy = true
+
+[node name="MovementHandler" parent="." instance=ExtResource("5_5dt8b")]
+velocity = 5.0
+
+[node name="ShotSpawner" type="Node2D" parent="."]
+position = Vector2(-50, 0)
+
+[connection signal="on_death" from="HealthBar" to="." method="_on_health_bar_on_death"]
